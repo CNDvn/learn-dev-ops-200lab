@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx-pod
+spec:
+  containers:
+    - name: nginx-container
+      image: nginx
+      ports:
+        - containerPort: 80
+  nodeSelector: # kiếm node có lable tương ứng để đưa vào. như ví dụ thì nó sẽ kiếm node có lable với key là disk và value là ssd
+    disk: ssd

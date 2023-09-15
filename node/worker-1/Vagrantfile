@@ -1,0 +1,20 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "generic/ubuntu1804"
+    config.vm.box_version = "4.2.16"
+    config.vm.hostname = "worker1.local"
+    # config.vm.network "private_network", ip: "192.168.163.147"
+    config.vm.box_download_insecure = true
+    config.vm.provider "vmware_fusion" do |v|
+        v.ssh_info_public = true
+        v.gui = false
+        v.linked_clone = false
+        v.vmx["ethernet0.virtualdev"] = "vmxnet3"
+    end
+    config.vm.provision "shell", path: "./install.sh"
+    # config.vm.provision "shell", inline: <<--SHELL
+    #     echo "root password"
+    #     echo "123" | passwd --stdin root
+    #     sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    #     systemctl reload sshd
+    #     SHELL
+end
